@@ -24,4 +24,8 @@
     <ProjectReference Include="..\DataAccess.NetCore\DataAccess.NetCore.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Files\" />
+  </ItemGroup>
+
 </Project>
