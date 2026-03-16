@@ -1,3 +1,5 @@
+using BE_2722026_NetCoreAPI.Dapper;
+using DataAccess.NetCore.Dapper;
 using DataAccess.NetCore.DbContext;
 using DataAccess.NetCore.DO;
 using DataAccess.NetCore.IRepository;
@@ -59,7 +61,8 @@ namespace BE_2722026_NetCoreAPI
             builder.Services.AddScoped<IHotelGenericRepository, HotelGenericRepository>();
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
             builder.Services.AddScoped<IGenericRepository<Rooms>, GenericRepository<Rooms>>();
-          
+            builder.Services.AddTransient<IApplicationDbConnection, ApplicationDbConnection>();
+
 
 
             var app = builder.Build();
