@@ -1,4 +1,4 @@
-using BE_2722026_NetCoreAPI.Dapper;
+using Dapper;
 using DataAccess.NetCore.Dapper;
 using DataAccess.NetCore.DbContext;
 using DataAccess.NetCore.DO;
@@ -7,10 +7,12 @@ using DataAccess.NetCore.IServices;
 using DataAccess.NetCore.Services;
 using DataAccess.NetCore.UnitOfWork;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.IdentityModel.Tokens;
+using System.Data;
 using System.Text;
 
 namespace BE_2722026_NetCoreAPI
@@ -62,8 +64,12 @@ namespace BE_2722026_NetCoreAPI
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
             builder.Services.AddScoped<IGenericRepository<Rooms>, GenericRepository<Rooms>>();
             builder.Services.AddTransient<IApplicationDbConnection, ApplicationDbConnection>();
-
-
+            builder.Services.AddScoped<IRoomRepositoryDapper, RoomRepositoryDapper>();
+            builder.Services.AddScoped<IDbConnection>(sp =>
+            {
+                var connectionString = configuration.GetConnectionString("ConnStr");
+                return new SqlConnection(connectionString);
+            });
 
             var app = builder.Build();
 
